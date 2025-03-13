@@ -1,3 +1,10 @@
+from urllib.parse import quote as url_quote, quote_plus as url_quote_plus
+
+# Monkey-patch the import
+import werkzeug.urls
+werkzeug.urls.url_quote = url_quote
+werkzeug.urls.url_quote_plus = url_quote_plus
+
 from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -7,6 +14,7 @@ from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from datetime import datetime
 
+# Rest of your code...
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
